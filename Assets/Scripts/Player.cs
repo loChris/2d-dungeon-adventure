@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _jumpHeight = 10.0f;
+    [SerializeField] private float _speed = 3.0f;
     [SerializeField] private bool _isGrounded = false;
     [SerializeField] private bool _resetJumpCooldown = false;
 
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        float moveHorizontal = Input.GetAxisRaw("Horizontal") * _speed;
         _rigidbody2D.velocity = new Vector2(moveHorizontal, _rigidbody2D.velocity.y);
 
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
