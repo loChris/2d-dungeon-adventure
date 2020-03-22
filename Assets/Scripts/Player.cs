@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     private PlayerAnimation _playerAnimation;
-    private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _playerSpriteRenderer;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _jumpHeight = 10.0f;
     [SerializeField] private float _speed = 3.0f;
@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _playerAnimation = GetComponent<PlayerAnimation>();
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
@@ -28,16 +28,9 @@ public class Player : MonoBehaviour
     void Movement()
     {
         float moveHorizontal = Input.GetAxisRaw("Horizontal") * _speed;
-        
-        if (moveHorizontal > 0)
-        {
-            _spriteRenderer.flipX = false;
-        }
-        else if (moveHorizontal < 0)
-        {
-            _spriteRenderer.flipX = true;
-        }
 
+        FlipSrite(moveHorizontal);
+        
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             Debug.Log("you jumped");
@@ -65,6 +58,21 @@ public class Player : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    void FlipSrite(float move)
+    {
+        if (_playerSpriteRenderer != null)
+        {
+            if (move > 0)
+            {
+                _playerSpriteRenderer.flipX = false;
+            }
+            else if (move < 0)
+            {
+                _playerSpriteRenderer.flipX = true;
+            }
+        }
     }
 
     IEnumerator ResetJumpCooldown()
