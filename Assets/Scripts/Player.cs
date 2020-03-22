@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
+    private PlayerAnimation _playerAnimation;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _jumpHeight = 10.0f;
     [SerializeField] private float _speed = 3.0f;
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _playerAnimation = GetComponent<PlayerAnimation>();
     }
 
     void Update()
@@ -24,7 +26,6 @@ public class Player : MonoBehaviour
     void Movement()
     {
         float moveHorizontal = Input.GetAxisRaw("Horizontal") * _speed;
-        _rigidbody2D.velocity = new Vector2(moveHorizontal, _rigidbody2D.velocity.y);
 
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
@@ -32,6 +33,10 @@ public class Player : MonoBehaviour
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpHeight);
             StartCoroutine(ResetJumpCooldown());
         }
+        
+        _rigidbody2D.velocity = new Vector2(moveHorizontal, _rigidbody2D.velocity.y);
+        
+        _playerAnimation.Move(moveHorizontal);
     }
 
     bool IsGrounded ()
