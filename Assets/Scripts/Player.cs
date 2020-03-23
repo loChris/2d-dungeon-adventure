@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class Player : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
+        
+        if (Input.GetMouseButtonDown(0) && IsGrounded())
+        {
+            _playerAnimation.Attack();
+        }
     }
 
     void Movement()
