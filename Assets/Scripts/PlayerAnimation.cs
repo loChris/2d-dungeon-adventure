@@ -6,9 +6,12 @@ public class PlayerAnimation : MonoBehaviour
 {
     //need handle to animator
     private Animator _animator;
+    private Animator _swordSlash;
+    
     void Start()
     {
         _animator = GetComponentInChildren<Animator>();
+        _swordSlash = transform.GetChild(1).GetComponent<Animator>();
     }
 
     public void Move(float move)
@@ -25,5 +28,6 @@ public class PlayerAnimation : MonoBehaviour
     public void Attack()
     {
         _animator.SetTrigger("Attack");
+        _swordSlash.SetTrigger("SwordSlash");
     }
 }

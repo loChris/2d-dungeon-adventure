@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private PlayerAnimation _playerAnimation;
     private SpriteRenderer _playerSpriteRenderer;
+    private SpriteRenderer _swordSlashSpriteRenderer;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _jumpHeight = 10.0f;
     [SerializeField] private float _speed = 3.0f;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _playerAnimation = GetComponent<PlayerAnimation>();
         _playerSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _swordSlashSpriteRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -76,10 +78,12 @@ public class Player : MonoBehaviour
             if (move > 0)
             {
                 _playerSpriteRenderer.flipX = false;
+                _swordSlashSpriteRenderer.flipY = false;
             }
             else if (move < 0)
             {
                 _playerSpriteRenderer.flipX = true;
+                _swordSlashSpriteRenderer.flipY = true;
             }
         }
     }
