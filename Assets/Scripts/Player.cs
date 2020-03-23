@@ -28,14 +28,14 @@ public class Player : MonoBehaviour
     void Movement()
     {
         float moveHorizontal = Input.GetAxisRaw("Horizontal") * _speed;
-
+        _isGrounded = IsGrounded();
         FlipSrite(moveHorizontal);
         
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
-            Debug.Log("you jumped");
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, _jumpHeight);
             StartCoroutine(ResetJumpCooldown());
+            _playerAnimation.Jump(true);
         }
         
         _rigidbody2D.velocity = new Vector2(moveHorizontal, _rigidbody2D.velocity.y);
@@ -48,14 +48,17 @@ public class Player : MonoBehaviour
         RaycastHit2D hitInfo = Physics2D.Raycast(
             transform.position, 
             Vector2.down, 
-            0.6f, 
+            1f, 
             _groundLayer.value
             );
         
         if (hitInfo.collider != null)
         {
             if (_resetJumpCooldown == false)
-                return true;
+            {
+                _playerAnimation.Jump(false);
+                return true;   
+            }
         }
         return false;
     }
