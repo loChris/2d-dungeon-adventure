@@ -4,42 +4,40 @@ using UnityEngine;
 
 public class MossGiant : Enemy
 {
-    bool switchPoints = false;
+    private Animator _animator;
+    private Vector3 _currentTarget;
 
     void Start()
     {
+        _animator = GetComponentInChildren<Animator>();
         speed = 1;
     }
 
     public override void Update()
     {
-        if (switchPoints == false)
+        if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) 
         {
-            transform.position = Vector2.MoveTowards(
-                transform.position, 
-                pointB.position, 
-                speed * Time.deltaTime
-            );
-        } 
-        else if (switchPoints)
-        {
-            {
-                transform.position = Vector2.MoveTowards(
-                    transform.position,
-                    pointA.position,
-                    speed * Time.deltaTime
-                );
-            }
+            return;
         }
         
+        Movement();
+    }
+
+    void Movement()
+    {
         if (transform.position == pointA.position)
         {
-            switchPoints = false;
+            _currentTarget = pointB.position;
         }
         else if (transform.position == pointB.position)
         {
-            Debug.Log("Im at point B");
-            switchPoints = true;
+            _currentTarget = pointA.position;
         }
+
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            _currentTarget, 
+            speed * Time.deltaTime
+            );
     }
 }
