@@ -5,12 +5,14 @@ using UnityEngine;
 public class MossGiant : Enemy
 {
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
     private Vector3 _currentTarget;
 
     void Start()
     {
         _animator = GetComponentInChildren<Animator>();
-        speed = 1;
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        speed = 2;
     }
 
     public override void Update()
@@ -25,12 +27,16 @@ public class MossGiant : Enemy
 
     void Movement()
     {
+        _spriteRenderer.flipX = _currentTarget == pointA.position;
+
         if (transform.position == pointA.position)
         {
+            _animator.SetTrigger("Idle");
             _currentTarget = pointB.position;
         }
         else if (transform.position == pointB.position)
         {
+            _animator.SetTrigger("Idle");
             _currentTarget = pointA.position;
         }
 
