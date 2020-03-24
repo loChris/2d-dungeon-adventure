@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class MossGiant : Enemy
 {
-    public override void Start()
+    public override void Init()
     {
-        base.Start();
+        base.Init();
         speed = 2;
     }
 }
