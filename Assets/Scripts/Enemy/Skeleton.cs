@@ -7,6 +7,6 @@ public class Skeleton : Enemy
     public override void Init()
     {
         base.Init();
-        speed = 2;
+        speed = 1;
     }
 }

@@ -8,6 +8,6 @@ public class Spider : Enemy
     public override void Init()
     {
         base.Init();
-        speed = 3;
+        speed = 1;
     }
 }
